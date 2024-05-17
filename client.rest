@@ -1,3 +1,6 @@
+@baseurl =  http://localhost:8000/api
+
+# @name login
 POST http://localhost:8000/api/auth/login HTTP/1.1
 content-type: application/json
 
@@ -5,3 +8,51 @@ content-type: application/json
     "email": "emendoza@example.com",
     "password": "password"
 }
+
+###
+@authToken = {{login.response.body.access_token}}
+
+####
+POST {{baseurl}}/auth/me HTTP/1.1
+content-type: application/json
+Authorization: bearer {{authToken}}
+
+### Categorias
+# @name categoryList
+GET {{baseurl}}/category
+Content-Type: application/json
+Authorization: bearer {{authToken}}
+
+### Categorias
+# @name categoryDetail
+GET {{baseurl}}/category/8
+Content-Type: application/json
+Authorization: bearer {{authToken}}
+
+### Nueva Categoria
+# @name categoryNew
+POST {{baseurl}}/category
+Content-Type: application/json
+Authorization: bearer {{authToken}}
+
+{
+    "name" : "Nueva Categoria 1"
+}
+
+
+### Editar categoria
+# @name categoryUpdate
+PUT {{baseurl}}/category/7
+Content-Type: application/json
+Authorization: bearer {{authToken}}
+
+{
+    "name" : "Nuevo Nombre de Categoria"
+}
+
+
+### Eliminar categoria
+# @name categoryUpdate
+DELETE {{baseurl}}/category/7
+Content-Type: application/json
+Authorization: bearer {{authToken}}
